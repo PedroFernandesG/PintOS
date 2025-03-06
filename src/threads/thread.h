@@ -90,6 +90,8 @@ struct thread
     int priority;                       /* Priority. */
     struct list_elem allelem;           /* List element for all threads list. */
     int64_t momento_de_acordar;
+    int nice; 
+    int cpu_time;
 
     /* Shared between thread.c and synch.c. */
     struct list_elem elem;              /* List element. */
@@ -136,9 +138,13 @@ void thread_set_priority (int);
 
 int thread_get_nice (void);
 void thread_set_nice (int);
+void thread_set_recent_cpu (void);
 int thread_get_recent_cpu (void);
 int thread_get_load_avg (void);
 void thread_dormir(int64_t ticks, struct thread *thread_atual);
 void thread_acordar(void);
+void avg_load(void);
+int checar_prioridade(struct thread *thread_atual);
+int nova_Prioridade(void);
 
 #endif /* threads/thread.h */
