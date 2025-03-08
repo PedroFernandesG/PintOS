@@ -93,16 +93,14 @@ timer_sleep (int64_t ticks)
 {
   if(ticks <= 0) return; 
     /*Tick precisa ser maior que 0, para que a thread possa dormir por um tempo valido*/
-
   int64_t start = timer_ticks();
 
   ASSERT(intr_get_level () == INTR_ON);
   /*ASSERT() é uma macro de depuração que verifica se uma condição é verdadeira, intr_context() verifica se a função está sendo chamada dentro de uma interrupção do sistema.
     Caso não esteja podemos bloquear a thread, caso contrario poderiamos atrapalhar o escalonamento do sistema*/
-  struct thread *thread_atual = thread_current(); //Guarda a thread atual em uma variavel
 
   while(timer_elapsed (start) < ticks) 
-    thread_dormir(start + ticks,thread_atual);
+    thread_dormir(start + ticks); //Coloca a thread pra dormir com o momento de acordar sendo start+ticks
 
 }
 /* Sleeps for approximately MS milliseconds.  Interrupts must be
@@ -174,7 +172,7 @@ timer_print_stats (void)
 {
   printf ("Timer: %"PRId64" ticks\n", timer_ticks ());
 }
-
+
 /* Timer interrupt handler. */
 static void
 timer_interrupt (struct intr_frame *args UNUSED)

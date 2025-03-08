@@ -40,3 +40,4 @@ typedef int float_type;
         : ((A - (1 << (FLOAT_SHIFT_AMOUNT - 1))) >> FLOAT_SHIFT_AMOUNT))
 
 #endif
+
